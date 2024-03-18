@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "boards")
 public class Board extends TimeStamped {
@@ -47,6 +46,13 @@ public class Board extends TimeStamped {
         this.content = content;
         this.user = user;
         this.bottomCategory = bbc;
+    }
+
+    public Board update(String title, String content) {
+        this.title = title;
+        this.content = content;
+
+        return this;
     }
 
     public void setS3Files(S3File s3File) {
