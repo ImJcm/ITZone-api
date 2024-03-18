@@ -32,7 +32,7 @@ public class BoardController {
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
         Page<BoardResponseDto> result = boardService.readBoards(page, size);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /**
@@ -41,7 +41,17 @@ public class BoardController {
     @GetMapping("/{id}")
     public ResponseEntity<BoardResponseDto> readBoard(@PathVariable Long id) {
         BoardResponseDto result = boardService.readBoard(id);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    /**
+     * 게시글 수정
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseDto> updateBoard(
+            @PathVariable long id,
+            @ModelAttribute BoardRequestDto requestDto) {
+        ApiResponseDto result = boardService.updateBoard(id, requestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }

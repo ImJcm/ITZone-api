@@ -30,4 +30,13 @@ public interface BoardService {
      * @return
      */
     BoardResponseDto readBoard(Long id);
+
+    /**
+     * 게시글 수정
+     *
+     * @param id
+     * @param requestDto
+     * @return
+     */
+    ApiResponseDto updateBoard(long id, BoardRequestDto requestDto);
 }

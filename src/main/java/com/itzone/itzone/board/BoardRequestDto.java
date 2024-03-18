@@ -15,7 +15,7 @@ public class BoardRequestDto {
     private String content;
 
     @NotBlank(message = "카테고리를 지정해주세요.")
-    private int category;
+    private String category;
 
     private List<MultipartFile> S3files;
 }
