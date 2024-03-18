@@ -6,10 +6,7 @@ import com.itzone.itzone.comment.Comment;
 import com.itzone.itzone.common.TimeStamped;
 import com.itzone.itzone.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "boards")
 public class Board extends TimeStamped {
     @Id
@@ -50,5 +47,9 @@ public class Board extends TimeStamped {
         this.content = content;
         this.user = user;
         this.bottomCategory = bbc;
+    }
+
+    public void setS3Files(S3File s3File) {
+        this.S3Files.add(s3File);
     }
 }
