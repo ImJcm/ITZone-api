@@ -48,6 +48,8 @@ public interface BoardService {
     /**
      * 게시글 찾기 by boardId
      *
+     * @param id
+     * @return
      */
     Board findBoardById(long id);
 }
