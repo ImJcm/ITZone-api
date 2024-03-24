@@ -115,8 +115,8 @@ public class BoardServiceImpl implements BoardService {
     /**
      * 게시글 찾기 by boardId
      *
-     * @param id
-     * @return
+     * @param id    게시글 id
+     * @return      요청 처리 결과
      */
     @Override
     public Board findBoardById(long id) {
