@@ -58,7 +58,6 @@ public class BoardServiceImpl implements BoardService {
         return boardList.map(BoardResponseDto::new);
     }
 
-
     /**
      * 게시글 단일 조회
      *
@@ -67,8 +66,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public BoardResponseDto readBoard(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("선택한 게시글은 존재하지 않습니다."));
+        Board board = findBoardById(id);
 
         return new BoardResponseDto(board);
     }
@@ -76,7 +74,7 @@ public class BoardServiceImpl implements BoardService {
     /**
      * 게시글 수정
      *
-     * AutenticationPrincipal OAuth User 필요
+     * @AuthenticationPrincipal OAuth User 필요
      * BottomCategory 필요
      *
      * @param id         게시글 id
@@ -86,8 +84,7 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public ApiResponseDto updateBoard(long id, BoardRequestDto requestDto) {
-        Board board = boardRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("선택한 게시글은 존재하지 않습니다."));
+        Board board = findBoardById(id);
 
         String newTitle = requestDto.getTitle();
         String newContent = requestDto.getContent();
@@ -95,5 +92,36 @@ public class BoardServiceImpl implements BoardService {
         board.update(newTitle, newContent);
 
         return new ApiResponseDto("게시글 수정 성공", HttpStatus.OK.value());
+    }
+
+    /**
+     * 게시글 삭제
+     *
+     * @AuthenticationPrincipal oAuth User 필요
+     *
+     * @param id    게시글 id
+     * @return      요청 처리 결과
+     */
+    @Override
+    public ApiResponseDto deleteBoard(long id) {
+        Board board = findBoardById(id);
+
+        boardRepository.delete(board);
+
+        return new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value());
+
+    }
+
+    /**
+     * 게시글 찾기 by boardId
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Board findBoardById(long id) {
+        Board board = boardRepository.findById(id).orElseThrow(()
+                -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
+        return board;
     }
 }

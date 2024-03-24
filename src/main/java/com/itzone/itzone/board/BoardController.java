@@ -54,4 +54,13 @@ public class BoardController {
         ApiResponseDto result = boardService.updateBoard(id, requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    /**
+     * 게시글 삭제
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseDto> deleteBoard(@PathVariable long id) {
+        ApiResponseDto result = boardService.deleteBoard(id);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }
