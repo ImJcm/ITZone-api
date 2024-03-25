@@ -3,6 +3,8 @@ package com.itzone.itzone.board;
 import com.itzone.itzone.awsS3.S3File;
 import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.common.ApiResponseDto;
+import com.itzone.itzone.exception.ErrorCode;
+import com.itzone.itzone.exception.ITZoneException;
 import com.itzone.itzone.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -121,7 +123,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board findBoardById(long id) {
         Board board = boardRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
+                -> new ITZoneException(ErrorCode.BOARD_NOT_EXIST,HttpStatus.BAD_REQUEST));
         return board;
     }
 }
