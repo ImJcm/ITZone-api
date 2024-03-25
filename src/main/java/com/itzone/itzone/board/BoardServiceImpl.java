@@ -1,7 +1,9 @@
 package com.itzone.itzone.board;
 
 import com.itzone.itzone.awsS3.S3File;
+import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.common.ApiResponseDto;
+import com.itzone.itzone.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
      * S3Files 저장할 AWS S3 Service 필요
      *
      * @param requestDto 게시글 작성 요청 데이터
-     * @return 요청 처리 결과
+     * @return           요청 처리 결과
      */
     @Override
     public ApiResponseDto createBoard(BoardRequestDto requestDto) {
@@ -56,17 +58,70 @@ public class BoardServiceImpl implements BoardService {
         return boardList.map(BoardResponseDto::new);
     }
 
-
     /**
      * 게시글 단일 조회
      *
      * @param id 게시글 id
-     * @return 요청 처리 결과
+     * @return   요청 처리 결과
      */
     @Override
     public BoardResponseDto readBoard(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 게시글은 존재하지 않습니다."));
+        Board board = findBoardById(id);
 
         return new BoardResponseDto(board);
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @AuthenticationPrincipal OAuth User 필요
+     * BottomCategory 필요
+     *
+     * @param id         게시글 id
+     * @param requestDto 게시글 수정 요청 사항
+     * @return           요청 처리 결과
+     */
+    @Transactional
+    @Override
+    public ApiResponseDto updateBoard(long id, BoardRequestDto requestDto) {
+        Board board = findBoardById(id);
+
+        String newTitle = requestDto.getTitle();
+        String newContent = requestDto.getContent();
+
+        board.update(newTitle, newContent);
+
+        return new ApiResponseDto("게시글 수정 성공", HttpStatus.OK.value());
+    }
+
+    /**
+     * 게시글 삭제
+     *
+     * @AuthenticationPrincipal oAuth User 필요
+     *
+     * @param id    게시글 id
+     * @return      요청 처리 결과
+     */
+    @Override
+    public ApiResponseDto deleteBoard(long id) {
+        Board board = findBoardById(id);
+
+        boardRepository.delete(board);
+
+        return new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value());
+
+    }
+
+    /**
+     * 게시글 찾기 by boardId
+     *
+     * @param id    게시글 id
+     * @return      요청 처리 결과
+     */
+    @Override
+    public Board findBoardById(long id) {
+        Board board = boardRepository.findById(id).orElseThrow(()
+                -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
+        return board;
     }
 }

@@ -2,9 +2,6 @@ package com.itzone.itzone.board;
 
 import com.itzone.itzone.common.ApiResponseDto;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface BoardService {
     /**
@@ -30,4 +27,29 @@ public interface BoardService {
      * @return
      */
     BoardResponseDto readBoard(Long id);
+
+    /**
+     * 게시글 수정
+     *
+     * @param id
+     * @param requestDto
+     * @return
+     */
+    ApiResponseDto updateBoard(long id, BoardRequestDto requestDto);
+
+    /**
+     * 게시글 삭제
+     *
+     * @param id
+     * @return
+     */
+    ApiResponseDto deleteBoard(long id);
+
+    /**
+     * 게시글 찾기 by boardId
+     *
+     * @param id
+     * @return
+     */
+    Board findBoardById(long id);
 }
