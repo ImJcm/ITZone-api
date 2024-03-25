@@ -1,6 +1,8 @@
-package com.itzone.itzone.category;
+package com.itzone.itzone.category.top;
 
+import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +19,13 @@ public class BoardTopCategory {
 
     @Column(nullable = false)
     private String categoryName;
+
+    private String classification;
+
+
+    @Builder
+    public BoardTopCategory(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
 }

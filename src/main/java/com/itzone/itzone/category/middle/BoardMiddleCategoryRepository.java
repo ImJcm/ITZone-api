@@ -1,4 +1,4 @@
-package com.itzone.itzone.category;
+package com.itzone.itzone.category.middle;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

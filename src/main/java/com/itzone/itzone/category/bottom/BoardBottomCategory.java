@@ -1,6 +1,8 @@
-package com.itzone.itzone.category;
+package com.itzone.itzone.category.bottom;
 
+import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +20,21 @@ public class BoardBottomCategory {
     @Column(nullable = false)
     private String categoryName;
 
+
+//    private String classificationSub;
+//    @Builder
+//    public BoardBottomCategory(String categoryName, String classificationSub) {
+//        this.categoryName = categoryName;
+//        this.classificationSub = classificationSub;
+//    }
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_middle_category_id")
     private BoardMiddleCategory boardMiddleCategory;
+
+    public BoardBottomCategory (String categoryName){
+        this.categoryName = categoryName;
+    }
+
 }
