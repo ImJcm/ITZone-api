@@ -27,6 +27,8 @@ out/
 !**/src/test/**/out/
 
 application.properties
+messages.properties
+errors.properties
 
 ### NetBeans ###
 /nbproject/private/

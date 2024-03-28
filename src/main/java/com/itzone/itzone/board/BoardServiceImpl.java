@@ -3,6 +3,9 @@ package com.itzone.itzone.board;
 import com.itzone.itzone.awsS3.S3File;
 //import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.common.ApiResponseDto;
+import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.exception.ErrorCode;
+import com.itzone.itzone.exception.ITZoneException;
 import com.itzone.itzone.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.save(board);
 
-        return new ApiResponseDto("게시글 등록 성공", HttpStatus.CREATED.value());
+        return ApiResponseDto.of(MessageCode.BOARD_CREATE.getMessage(), HttpStatus.CREATED.value());
     }
 
     /**
@@ -91,7 +94,7 @@ public class BoardServiceImpl implements BoardService {
 
         board.update(newTitle, newContent);
 
-        return new ApiResponseDto("게시글 수정 성공", HttpStatus.OK.value());
+        return ApiResponseDto.of(MessageCode.BOARD_UPDATE.getMessage(), HttpStatus.OK.value());
     }
 
     /**
@@ -108,7 +111,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.delete(board);
 
-        return new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value());
+        return new ApiResponseDto(MessageCode.BOARD_DELETE.getMessage(), HttpStatus.OK.value());
 
     }
 
@@ -121,7 +124,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board findBoardById(long id) {
         Board board = boardRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
+                -> new ITZoneException(ErrorCode.BOARD_NOT_EXIST,HttpStatus.BAD_REQUEST));
         return board;
     }
 }
