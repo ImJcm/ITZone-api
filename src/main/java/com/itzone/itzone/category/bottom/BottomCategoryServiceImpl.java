@@ -43,13 +43,16 @@ public class BottomCategoryServiceImpl implements BottomCategoryService{
     @Transactional
     public BottomCategoryResponseDto updateBottomCategory(Long id, BottomCategoryRequestDto bottomCategoryRequestDto){
         BoardBottomCategory bottomCategory = findById(id);
+
         bottomCategory.setCategoryName(bottomCategoryRequestDto.getCategoryName());
+
         return new BottomCategoryResponseDto(bottomCategory);
     }
 
     //삭제
     public ApiResponseDto deleteBottomCategory(Long id){
         BoardBottomCategory bottomCategory = findById(id);
+
         boardBottomCategoryRepository.delete(bottomCategory);
 
         return new ApiResponseDto("하위 카테고리 삭제 성공",HttpStatus.CREATED.value());

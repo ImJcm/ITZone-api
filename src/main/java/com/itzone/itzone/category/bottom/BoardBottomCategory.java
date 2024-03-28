@@ -20,15 +20,6 @@ public class BoardBottomCategory {
     @Column(nullable = false)
     private String categoryName;
 
-
-//    private String classificationSub;
-//    @Builder
-//    public BoardBottomCategory(String categoryName, String classificationSub) {
-//        this.categoryName = categoryName;
-//        this.classificationSub = classificationSub;
-//    }
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_middle_category_id")
     private BoardMiddleCategory boardMiddleCategory;

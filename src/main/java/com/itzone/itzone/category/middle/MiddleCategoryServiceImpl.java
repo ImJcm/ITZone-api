@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
     private final BoardMiddleCategoryRepository boardMiddleCategoryRepository;
-//
-//    public ApiResponseDto createMiddleCategory(MiddleCategoryRequestDto middleCategoryRequestDto){
-//
-//        String categoryName = middleCategoryRequestDto.getCategoryName();
-//
-//        BoardMiddleCategory bottomCategory = new BoardMiddleCategory(categoryName);
-//
-//        boardMiddleCategoryRepository.save(bottomCategory);
-//
-//        return new ApiResponseDto("중위 카테고리리 등록 성공", HttpStatus.CREATED.value());
-//
-//    }
+
+    public ApiResponseDto createMiddleCategory(MiddleCategoryRequestDto middleCategoryRequestDto){
+
+        String categoryName = middleCategoryRequestDto.getCategoryName();
+
+        BoardMiddleCategory bottomCategory = new BoardMiddleCategory(categoryName);
+
+        boardMiddleCategoryRepository.save(bottomCategory);
+
+        return new ApiResponseDto("중위 카테고리리 등록 성공", HttpStatus.CREATED.value());
+
+    }
     //조회
     public MiddleCategoryListResponseDto getMiddleCategory() {
         List<MiddleCategoryResponseDto> middleCategoryList = boardMiddleCategoryRepository.findAll().stream()
@@ -40,7 +40,9 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
     @Transactional
     public MiddleCategoryResponseDto updateMiddleCategory(Long id, MiddleCategoryRequestDto middleCategoryRequestDto){
         BoardMiddleCategory middleCategory = findById(id);
+
         middleCategory.setCategoryName(middleCategoryRequestDto.getCategoryName());
+
         return new MiddleCategoryResponseDto(middleCategory);
     }
 
@@ -48,6 +50,7 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
     @Transactional
     public ApiResponseDto deleteMiddleCategory(Long id){
         BoardMiddleCategory middleCategory = findById(id);
+
         boardMiddleCategoryRepository.delete(middleCategory);
 
         return new ApiResponseDto("중위 카테고리 삭제 성공",HttpStatus.CREATED.value());

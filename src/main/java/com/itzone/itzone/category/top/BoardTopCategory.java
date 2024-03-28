@@ -20,9 +20,6 @@ public class BoardTopCategory {
     @Column(nullable = false)
     private String categoryName;
 
-    private String classification;
-
-
     @Builder
     public BoardTopCategory(String categoryName) {
         this.categoryName = categoryName;

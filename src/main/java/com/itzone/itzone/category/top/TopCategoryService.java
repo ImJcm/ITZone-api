@@ -7,7 +7,7 @@ import com.itzone.itzone.common.ApiResponseDto;
 
 public interface TopCategoryService {
 
-    ApiResponseDto cretateTopCategory(TopCategoryRequestDto topCategoryRequestDto);
+    ApiResponseDto createTopCategory(TopCategoryRequestDto topCategoryRequestDto);
 
     TopCategoryListResponseDto getTopCategory();
 

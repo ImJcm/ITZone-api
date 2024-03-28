@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TopCategoryServiceImpl implements  TopCategoryService{
+public class TopCategoryServiceImpl implements TopCategoryService{
 
     private final BoardTopCategoryRepository boardTopCategoryRepository;
 
-    public ApiResponseDto cretateTopCategory(TopCategoryRequestDto topCategoryRequestDto){
+    public ApiResponseDto createTopCategory(TopCategoryRequestDto topCategoryRequestDto){
 
         String categoryName = topCategoryRequestDto.getCategoryName();
 
@@ -40,7 +40,9 @@ public class TopCategoryServiceImpl implements  TopCategoryService{
     @Transactional
     public TopCategoryResponseDto updateTopCategory(Long id, TopCategoryRequestDto topCategoryRequestDto){
         BoardTopCategory topCategory = findById(id);
+
         topCategory.setCategoryName(topCategoryRequestDto.getCategoryName());
+
         return new TopCategoryResponseDto(topCategory);
     }
 
@@ -48,6 +50,7 @@ public class TopCategoryServiceImpl implements  TopCategoryService{
     @Transactional
     public ApiResponseDto deleteTopCategory(Long id){
         BoardTopCategory middleCategory = findById(id);
+
         boardTopCategoryRepository.delete(middleCategory);
 
         return new ApiResponseDto("상위 카테고리 삭제 성공",HttpStatus.CREATED.value());

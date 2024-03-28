@@ -1,6 +1,5 @@
 package com.itzone.itzone.category.bottom;
 
-import com.itzone.itzone.category.CategoryRequestDto;
 import com.itzone.itzone.common.ApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,17 +26,16 @@ public class BottomCategoryController {
 
         BottomCategoryListResponseDto bottomCategory = bottomCategoryService.getBottomCategory();
 
-        return ResponseEntity.ok().body(bottomCategory);
+        return ResponseEntity.status(HttpStatus.OK).body(bottomCategory);
     }
 
     //수정
     @PutMapping("/admin/categories/bottom/{id}")
-    public ResponseEntity<ApiResponseDto> updateBottomCategory(@PathVariable Long id, @RequestBody BottomCategoryRequestDto bottomCategoryRequestDto) {
+    public ResponseEntity<BottomCategoryResponseDto> updateBottomCategory(@PathVariable Long id, @RequestBody BottomCategoryRequestDto bottomCategoryRequestDto) {
 
-        ApiResponseDto updateCategory = bottomCategoryService.updateBottomCategory(id, bottomCategoryRequestDto);
+        BottomCategoryResponseDto bottomCategory = bottomCategoryService.updateBottomCategory(id, bottomCategoryRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(updateCategory);
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(bottomCategory);
     }
 
     //삭제
@@ -47,6 +45,5 @@ public class BottomCategoryController {
         ApiResponseDto bottomCategory = bottomCategoryService.deleteBottomCategory(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(bottomCategory);
-
     }
 }

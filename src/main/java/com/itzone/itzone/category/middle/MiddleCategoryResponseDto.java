@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class MiddleCategoryResponseDto {
     private Long id;
+
     private String categoryName;
 
     public MiddleCategoryResponseDto(BoardMiddleCategory boardMiddleCategory){

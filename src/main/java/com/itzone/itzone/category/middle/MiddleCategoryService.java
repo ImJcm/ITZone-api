@@ -7,7 +7,7 @@ import com.itzone.itzone.common.ApiResponseDto;
 
 public interface MiddleCategoryService {
 
-    //ApiResponseDto createMiddleCategory(MiddleCategoryRequestDto middleCategoryRequestDto);
+    ApiResponseDto createMiddleCategory(MiddleCategoryRequestDto middleCategoryRequestDto);
 
     MiddleCategoryListResponseDto getMiddleCategory();
 

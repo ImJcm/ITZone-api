@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class TopCategoryResponseDto {
     private Long id;
+
     private String categoryName;
 
     public TopCategoryResponseDto(BoardTopCategory boardTopCategory){
