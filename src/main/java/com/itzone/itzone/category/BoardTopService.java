@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class BoardTopService {
 
     private BoardTopCategoryRepository boardTopCategoryRepository;
@@ -14,7 +14,6 @@ public class BoardTopService {
     private BoardMiddleCategoryRepository boardMiddleCategoryRepository;
 
     private BoardBottomCategoryRepository boardBottomCategoryRepository;
-
 
 
 }
