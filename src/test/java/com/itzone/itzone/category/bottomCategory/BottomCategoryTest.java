@@ -11,11 +11,14 @@ import com.itzone.itzone.user.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @Transactional
 @SpringBootTest
@@ -41,4 +44,12 @@ public class BottomCategoryTest {
         BoardBottomCategory category = boardBottomCategoryRepository.findAll().get(0);
         assertThat(category.getCategoryName()).isEqualTo("자유게시판");
     }
-}
+    @ParameterizedTest
+    @NullAndEmptySource
+    void 하위_카테고리_생성_실패_값이_공백(String categoryName){
+        BottomCategoryRequestDto requestDto = new BottomCategoryRequestDto(categoryName, "미들", "중위 게시판");
+
+        assertThatIllegalArgumentException().isThrownBy(()->bottomCategoryService.createBottomCategory(requestDto));
+        }
+    }
+

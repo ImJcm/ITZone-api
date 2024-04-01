@@ -43,7 +43,7 @@ public class TopCategoryController {
     }
 
     //삭제
-    @DeleteMapping("/admin/categories/middle/{id}")
+    @DeleteMapping("/admin/categories/top/{id}")
     public ResponseEntity<ApiResponseDto> deleteBottomCategory(@PathVariable Long id) {
 
         ApiResponseDto topCategory = topCategoryService.deleteTopCategory(id);
