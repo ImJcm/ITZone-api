@@ -19,8 +19,6 @@ public class ITZoneExceptionHandler {
     @ExceptionHandler(ITZoneException.class)
     public ResponseEntity<ErrorResponse> handleITZoneException(ITZoneException e) {
         ErrorCode errorCode = e.getErrorCode();
-        System.out.println(e.getLocalizedMessage());
-        System.out.println(e.getMessage());
         return ResponseEntity.status(errorCode.getStatus())
                 .body(ErrorResponse.of(errorCode,e.getMessage()));
     }
