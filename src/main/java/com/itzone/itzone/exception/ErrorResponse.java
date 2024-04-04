@@ -2,22 +2,23 @@ package com.itzone.itzone.exception;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.aspectj.apache.bcel.classfile.Code;
 
 @Getter
 public class ErrorResponse {
-    String errorMessage;
-    int statusCode;
+    String code;
+    String message;
 
     @Builder
-    public ErrorResponse(String errorMessage, int statusCode) {
-        this.errorMessage = errorMessage;
-        this.statusCode = statusCode;
+    public ErrorResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
-    public static ErrorResponse of(String errorMessage, int statusCode) {
+    public static ErrorResponse of(ErrorCode errorCode, String message) {
         return ErrorResponse.builder()
-                .errorMessage(errorMessage)
-                .statusCode(statusCode)
+                .code(errorCode.getCode())
+                .message(message)
                 .build();
     }
 }

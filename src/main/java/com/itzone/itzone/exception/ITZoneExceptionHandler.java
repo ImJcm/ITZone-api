@@ -1,9 +1,12 @@
 package com.itzone.itzone.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 @RestControllerAdvice
 public class ITZoneExceptionHandler {
@@ -15,8 +18,11 @@ public class ITZoneExceptionHandler {
      */
     @ExceptionHandler(ITZoneException.class)
     public ResponseEntity<ErrorResponse> handleITZoneException(ITZoneException e) {
-        return ResponseEntity.status(e.getHttpStatus())
-                .body(ErrorResponse.of(e.getMessage(), e.getHttpStatus().value()));
+        ErrorCode errorCode = e.getErrorCode();
+        System.out.println(e.getLocalizedMessage());
+        System.out.println(e.getMessage());
+        return ResponseEntity.status(errorCode.getStatus())
+                .body(ErrorResponse.of(errorCode,e.getMessage()));
     }
 
     /**
@@ -28,7 +34,14 @@ public class ITZoneExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return ResponseEntity.status(e.getStatusCode())
-                .body(ErrorResponse.of(e.getMessage(),e.getStatusCode().value()));
+        ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
+
+        List<String> errors = e.getBindingResult().getFieldErrors()
+                        .stream()
+                        .map(ex -> ex.getField() + " : " + ex.getDefaultMessage())
+                        .toList();
+
+        return ResponseEntity.status(errorCode.getStatus())
+                .body(ErrorResponse.of(errorCode,errors.toString()));
     }
 }

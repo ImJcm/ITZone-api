@@ -3,7 +3,7 @@ package com.itzone.itzone.board;
 import com.itzone.itzone.awsS3.S3File;
 import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
 import com.itzone.itzone.user.User;
@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.save(board);
 
-        return ApiResponseDto.of(MessageCode.BOARD_CREATE.getMessage(), HttpStatus.CREATED.value());
+        return ApiResponseDto.of(Message.BOARD_CREATE.getMessage(), HttpStatus.CREATED.value());
     }
 
     /**
@@ -94,7 +94,7 @@ public class BoardServiceImpl implements BoardService {
 
         board.update(newTitle, newContent);
 
-        return ApiResponseDto.of(MessageCode.BOARD_UPDATE.getMessage(), HttpStatus.OK.value());
+        return ApiResponseDto.of(Message.BOARD_UPDATE.getMessage(), HttpStatus.OK.value());
     }
 
     /**
@@ -111,7 +111,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.delete(board);
 
-        return new ApiResponseDto(MessageCode.BOARD_DELETE.getMessage(), HttpStatus.OK.value());
+        return new ApiResponseDto(Message.BOARD_DELETE.getMessage(), HttpStatus.OK.value());
 
     }
 
@@ -123,8 +123,9 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public Board findBoardById(long id) {
+        System.out.println(Message.BOARD_NOT_EXIST.getMessage());
         Board board = boardRepository.findById(id).orElseThrow(()
-                -> new ITZoneException(ErrorCode.BOARD_NOT_EXIST,HttpStatus.BAD_REQUEST));
+                -> new ITZoneException(ErrorCode.BOARD_NOT_EXIST,Message.BOARD_NOT_EXIST.getMessage()));
         return board;
     }
 }

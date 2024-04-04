@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.category.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import com.itzone.itzone.oauth.OAuthProvider;
 import com.itzone.itzone.user.User;
 import org.assertj.core.api.Assertions;
@@ -96,7 +96,7 @@ class BoardServiceTest {
 
         //then
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED.value());
-        Assertions.assertThat(result.getMessage()).isEqualTo(MessageCode.BOARD_CREATE.getMessage());
+        Assertions.assertThat(result.getMessage()).isEqualTo(Message.BOARD_CREATE.getMessage());
     }
 
 
