@@ -47,6 +47,7 @@ class BoardControllerTest {
     private static User user;
     private static BoardBottomCategory boardBottomCategory;
     private static MockMultipartFile file;
+    private static List<MultipartFile> files;
 
     @BeforeEach
     void setup() throws IOException {
@@ -72,6 +73,8 @@ class BoardControllerTest {
                 MediaType.IMAGE_PNG_VALUE,
                 "board/2024/03/31/image.png".getBytes());
 
+        files = new ArrayList<>();
+        files.add(file);
 
         board = Board.builder()
                 .title("테스트 게시글 제목")
@@ -82,11 +85,9 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("BOARD 생성 컨트롤러 로직 확인")
+    @DisplayName("Board 생성 컨트롤러 로직 확인")
     void createBoard() throws Exception {
         //given
-        List<MultipartFile> files = new ArrayList<>();
-        files.add(file);
         BoardRequestDto req = new BoardRequestDto(
                 board.getTitle(),
                 board.getContent(),
@@ -121,5 +122,33 @@ class BoardControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statusCode").value(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.message").value(Message.BOARD_CREATE.getMessage()));
+    }
+
+    @Test
+    @DisplayName("Board 생성 실패 - RequestDto @Valid 예외")
+    void createBoard_RequestDto_Exception() throws Exception {
+        //given
+        BoardRequestDto req_title_blank = new BoardRequestDto(
+                "",
+                board.getContent(),
+                board.getBottomCategory().getCategoryName(),
+                files
+        );
+
+        BoardRequestDto req_content_blank = new BoardRequestDto(
+                board.getTitle(),
+                "",
+                board.getBottomCategory().getCategoryName(),
+                files
+        );
+
+        BoardRequestDto req_category_blank = new BoardRequestDto(
+                board.getTitle(),
+                board.getContent(),
+                "",
+                files
+        );
+
+
     }
 }

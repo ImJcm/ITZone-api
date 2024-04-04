@@ -1,6 +1,7 @@
 package com.itzone.itzone.exception;
 
 import lombok.Getter;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.http.HttpStatus;
 
 @Getter
