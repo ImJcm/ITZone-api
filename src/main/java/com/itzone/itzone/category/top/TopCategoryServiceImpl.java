@@ -3,7 +3,7 @@ package com.itzone.itzone.category.top;
 
 import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class TopCategoryServiceImpl implements TopCategoryService{
 
         boardTopCategoryRepository.save(topCategory);
 
-        return new ApiResponseDto(MessageCode.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
+        return new ApiResponseDto(Message.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
 
     }
     //조회
@@ -52,7 +52,7 @@ public class TopCategoryServiceImpl implements TopCategoryService{
         topCategory.update(categoryName, categoryClassification);
 
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_UPDATE.getMessage(), HttpStatus.OK.value());
+        return ApiResponseDto.of(Message.CATEGORY_UPDATE.getMessage(), HttpStatus.OK.value());
     }
 
     //삭제
@@ -62,12 +62,12 @@ public class TopCategoryServiceImpl implements TopCategoryService{
 
         boardTopCategoryRepository.delete(middleCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_DELETE.getMessage(), HttpStatus.OK.value());
+        return ApiResponseDto.of(Message.CATEGORY_DELTE.getMessage(), HttpStatus.NO_CONTENT.value());
     }
 
     public BoardTopCategory findById(Long id){
         BoardTopCategory boardTopCategory = boardTopCategoryRepository.findById(id).orElseThrow(
-                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, HttpStatus.BAD_REQUEST)
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, Message.CATEGORY_NOT_EXIST.getMessage())
         );
         return boardTopCategory;
     }

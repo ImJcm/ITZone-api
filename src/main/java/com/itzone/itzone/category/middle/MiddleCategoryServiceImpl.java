@@ -4,7 +4,7 @@ package com.itzone.itzone.category.middle;
 import com.itzone.itzone.category.bottom.BoardBottomCategory;
 import com.itzone.itzone.category.top.BoardTopCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
         boardMiddleCategoryRepository.save(middleCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
+        return ApiResponseDto.of(Message.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
 
     }
     //조회
@@ -54,7 +54,7 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
         middleCategory.update(categoryName, categoryClassification, boardTopCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_UPDATE.getMessage(), HttpStatus.CREATED.value());
+        return ApiResponseDto.of(Message.CATEGORY_UPDATE.getMessage(), HttpStatus.CREATED.value());
     }
 
     //삭제
@@ -64,12 +64,12 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
         boardMiddleCategoryRepository.delete(middleCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_DELETE.getMessage(), HttpStatus.CREATED.value());
+        return ApiResponseDto.of(Message.CATEGORY_DELTE.getMessage(), HttpStatus.NO_CONTENT.value());
     }
 
     public BoardMiddleCategory findById(Long id){
         BoardMiddleCategory boardMiddleCategory = boardMiddleCategoryRepository.findById(id).orElseThrow(
-                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, HttpStatus.BAD_REQUEST)
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, Message.CATEGORY_NOT_EXIST.getMessage())
         );
         return boardMiddleCategory;
     }

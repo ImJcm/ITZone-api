@@ -11,6 +11,7 @@ public enum ErrorCode {
 
     UNAUTHORIZED(401, "ACCOUNT-001","인증에 실패한 경우"),
 
+    CATEGORY_NOT_EXIST(404,"CATEGORY-001", "카테고리가 존재하지 않는 경우"),
     BOARD_NOT_EXIST(404,"BOARD-001","게시글이 존재하지 않는 경우");
 
     private final int status;

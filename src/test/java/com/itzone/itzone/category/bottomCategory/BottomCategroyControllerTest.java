@@ -12,7 +12,7 @@ import com.itzone.itzone.category.bottom.BottomCategoryServiceImpl;
 import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.category.top.BoardTopCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,7 +79,7 @@ public class BottomCategroyControllerTest {
 
         given(bottomCategoryService.createBottomCategory(any()))
                 .willReturn(ApiResponseDto.builder()
-                        .message(MessageCode.CATEGORY_CREATE.getMessage())
+                        .message(Message.CATEGORY_CREATE.getMessage())
                         .statusCode(HttpStatus.CREATED.value())
                         .build());
 
@@ -100,6 +100,6 @@ public class BottomCategroyControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statusCode").value(HttpStatus.CREATED.value()))
-                .andExpect(jsonPath("$.message").value(MessageCode.CATEGORY_CREATE.getMessage()));
+                .andExpect(jsonPath("$.message").value(Message.CATEGORY_CREATE.getMessage()));
     }
 }

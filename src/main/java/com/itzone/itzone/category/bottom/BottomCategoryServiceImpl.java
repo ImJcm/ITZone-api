@@ -4,7 +4,7 @@ package com.itzone.itzone.category.bottom;
 import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
 import com.itzone.itzone.common.Category;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class BottomCategoryServiceImpl implements BottomCategoryService{
 
         boardBottomCategoryRepository.save(bottomCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
+        return ApiResponseDto.of(Message.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
 
     }
 
@@ -57,7 +57,7 @@ public class BottomCategoryServiceImpl implements BottomCategoryService{
 
         bottomCategory.update(categoryName, categoryClassification, boardMiddleCategory);
 
-        return ApiResponseDto.of(MessageCode.CATEGORY_UPDATE.getMessage(), HttpStatus.OK.value());
+        return ApiResponseDto.of(Message.CATEGORY_UPDATE.getMessage(), HttpStatus.OK.value());
     }
 
     //삭제
@@ -66,12 +66,12 @@ public class BottomCategoryServiceImpl implements BottomCategoryService{
 
         boardBottomCategoryRepository.delete(bottomCategory);
 
-        return new ApiResponseDto(MessageCode.CATEGORY_DELETE.getMessage(), HttpStatus.OK.value());
+        return new ApiResponseDto(Message.CATEGORY_DELTE.getMessage(), HttpStatus.NO_CONTENT.value());
     }
 
     public BoardBottomCategory findById(Long id){
         BoardBottomCategory boardBottomCategory = boardBottomCategoryRepository.findById(id).orElseThrow(
-                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, HttpStatus.BAD_REQUEST)
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, Message.CATEGORY_NOT_EXIST.getMessage())
         );
         return boardBottomCategory;
     }

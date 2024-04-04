@@ -11,7 +11,7 @@ import com.itzone.itzone.category.bottom.BottomCategoryRequestDto;
 import com.itzone.itzone.category.bottom.BottomCategoryServiceImpl;
 import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.common.Message;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,6 +72,6 @@ public class BottomCategoryServiceTest {
 
         //then
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.CREATED.value());
-        Assertions.assertThat(result.getMessage()).isEqualTo(MessageCode.CATEGORY_CREATE.getMessage());
+        Assertions.assertThat(result.getMessage()).isEqualTo(Message.CATEGORY_CREATE.getMessage());
     }
 }
