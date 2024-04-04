@@ -8,7 +8,7 @@ public interface BottomCategoryService {
 
     BottomCategoryListResponseDto getBottomCategory();
 
-    BottomCategoryResponseDto updateBottomCategory(Long id, BottomCategoryRequestDto bottomCategoryRequestDto);
+    ApiResponseDto updateBottomCategory(Long id, BottomCategoryRequestDto bottomCategoryRequestDto);
 
     ApiResponseDto deleteBottomCategory(Long id);
 }

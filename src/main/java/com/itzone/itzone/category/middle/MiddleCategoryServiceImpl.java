@@ -1,7 +1,12 @@
 package com.itzone.itzone.category.middle;
 
 
+import com.itzone.itzone.category.bottom.BoardBottomCategory;
+import com.itzone.itzone.category.top.BoardTopCategory;
 import com.itzone.itzone.common.ApiResponseDto;
+import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.exception.ErrorCode;
+import com.itzone.itzone.exception.ITZoneException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,13 +23,15 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
     public ApiResponseDto createMiddleCategory(MiddleCategoryRequestDto middleCategoryRequestDto){
 
-        String categoryName = middleCategoryRequestDto.getCategoryName();
+        BoardMiddleCategory middleCategory = BoardMiddleCategory.builder()
+                .categoryName(middleCategoryRequestDto.getCategoryName())
+                .categoryClassification(middleCategoryRequestDto.getCategoryClassification())
+                .boardTopCategory(middleCategoryRequestDto.getBoardTopCategory())
+                .build();
 
-        BoardMiddleCategory bottomCategory = new BoardMiddleCategory(categoryName);
+        boardMiddleCategoryRepository.save(middleCategory);
 
-        boardMiddleCategoryRepository.save(bottomCategory);
-
-        return new ApiResponseDto("중위 카테고리리 등록 성공", HttpStatus.CREATED.value());
+        return ApiResponseDto.of(MessageCode.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
 
     }
     //조회
@@ -38,12 +45,16 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
     //수정
     @Transactional
-    public MiddleCategoryResponseDto updateMiddleCategory(Long id, MiddleCategoryRequestDto middleCategoryRequestDto){
+    public ApiResponseDto updateMiddleCategory(Long id, MiddleCategoryRequestDto middleCategoryRequestDto){
         BoardMiddleCategory middleCategory = findById(id);
 
-        middleCategory.setCategoryName(middleCategoryRequestDto.getCategoryName());
+        String categoryName = middleCategoryRequestDto.getCategoryName();
+        String categoryClassification = middleCategoryRequestDto.getCategoryClassification();
+        BoardTopCategory boardTopCategory = middleCategoryRequestDto.getBoardTopCategory();
 
-        return new MiddleCategoryResponseDto(middleCategory);
+        middleCategory.update(categoryName, categoryClassification, boardTopCategory);
+
+        return ApiResponseDto.of(MessageCode.CATEGORY_UPDATE.getMessage(), HttpStatus.CREATED.value());
     }
 
     //삭제
@@ -53,13 +64,14 @@ public class MiddleCategoryServiceImpl implements MiddleCategoryService {
 
         boardMiddleCategoryRepository.delete(middleCategory);
 
-        return new ApiResponseDto("중위 카테고리 삭제 성공",HttpStatus.CREATED.value());
+        return ApiResponseDto.of(MessageCode.CATEGORY_DELETE.getMessage(), HttpStatus.CREATED.value());
     }
 
     public BoardMiddleCategory findById(Long id){
-        return boardMiddleCategoryRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 카테고리를 찾을 수 없습니다.")
+        BoardMiddleCategory boardMiddleCategory = boardMiddleCategoryRepository.findById(id).orElseThrow(
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, HttpStatus.BAD_REQUEST)
         );
+        return boardMiddleCategory;
     }
 }
 

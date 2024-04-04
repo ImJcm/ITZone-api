@@ -35,11 +35,11 @@ public class MiddleCategoryController {
 
     //수정
     @PutMapping("/admin/categories/middle/{id}")
-    public ResponseEntity<MiddleCategoryResponseDto> updateMiddleCategory(@PathVariable Long id, @RequestBody MiddleCategoryRequestDto middleCategoryRequestDto) {
+    public ResponseEntity<ApiResponseDto> updateMiddleCategory(@PathVariable Long id, @RequestBody MiddleCategoryRequestDto middleCategoryRequestDto) {
 
-        MiddleCategoryResponseDto middleCategory = middleCategoryService.updateMiddleCategory(id, middleCategoryRequestDto);
+        ApiResponseDto result = middleCategoryService.updateMiddleCategory(id, middleCategoryRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(middleCategory);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     //삭제

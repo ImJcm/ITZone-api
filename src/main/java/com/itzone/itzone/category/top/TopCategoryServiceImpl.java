@@ -1,7 +1,11 @@
 package com.itzone.itzone.category.top;
 
 
+import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
+import com.itzone.itzone.common.MessageCode;
+import com.itzone.itzone.exception.ErrorCode;
+import com.itzone.itzone.exception.ITZoneException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,13 +22,14 @@ public class TopCategoryServiceImpl implements TopCategoryService{
 
     public ApiResponseDto createTopCategory(TopCategoryRequestDto topCategoryRequestDto){
 
-        String categoryName = topCategoryRequestDto.getCategoryName();
+        BoardTopCategory topCategory = BoardTopCategory.builder()
+                .categoryName(topCategoryRequestDto.getCategoryName())
+                .categoryClassification(topCategoryRequestDto.getCategoryClassification())
+                .build();
 
-        BoardTopCategory bottomCategory = new BoardTopCategory(categoryName);
+        boardTopCategoryRepository.save(topCategory);
 
-        boardTopCategoryRepository.save(bottomCategory);
-
-        return new ApiResponseDto("상위 카테고리리 등록 성공", HttpStatus.CREATED.value());
+        return new ApiResponseDto(MessageCode.CATEGORY_CREATE.getMessage(), HttpStatus.CREATED.value());
 
     }
     //조회
@@ -38,12 +43,16 @@ public class TopCategoryServiceImpl implements TopCategoryService{
 
     //수정
     @Transactional
-    public TopCategoryResponseDto updateTopCategory(Long id, TopCategoryRequestDto topCategoryRequestDto){
+    public ApiResponseDto updateTopCategory(Long id, TopCategoryRequestDto topCategoryRequestDto){
         BoardTopCategory topCategory = findById(id);
 
-        topCategory.setCategoryName(topCategoryRequestDto.getCategoryName());
+        String categoryName = topCategoryRequestDto.getCategoryName();
+        String categoryClassification = topCategoryRequestDto.getCategoryClassification();
 
-        return new TopCategoryResponseDto(topCategory);
+        topCategory.update(categoryName, categoryClassification);
+
+
+        return ApiResponseDto.of(MessageCode.CATEGORY_UPDATE.getMessage(), HttpStatus.OK.value());
     }
 
     //삭제
@@ -53,13 +62,14 @@ public class TopCategoryServiceImpl implements TopCategoryService{
 
         boardTopCategoryRepository.delete(middleCategory);
 
-        return new ApiResponseDto("상위 카테고리 삭제 성공",HttpStatus.CREATED.value());
+        return ApiResponseDto.of(MessageCode.CATEGORY_DELETE.getMessage(), HttpStatus.OK.value());
     }
 
     public BoardTopCategory findById(Long id){
-        return boardTopCategoryRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 카테고리를 찾을 수 없습니다.")
+        BoardTopCategory boardTopCategory = boardTopCategoryRepository.findById(id).orElseThrow(
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, HttpStatus.BAD_REQUEST)
         );
+        return boardTopCategory;
     }
 }
 

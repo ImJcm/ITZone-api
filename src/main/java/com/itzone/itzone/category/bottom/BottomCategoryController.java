@@ -31,19 +31,19 @@ public class BottomCategoryController {
 
     //수정
     @PutMapping("/admin/categories/bottom/{id}")
-    public ResponseEntity<BottomCategoryResponseDto> updateBottomCategory(@PathVariable Long id, @RequestBody BottomCategoryRequestDto bottomCategoryRequestDto) {
+    public ResponseEntity<ApiResponseDto> updateBottomCategory(@PathVariable Long id, @RequestBody BottomCategoryRequestDto bottomCategoryRequestDto) {
 
-        BottomCategoryResponseDto bottomCategory = bottomCategoryService.updateBottomCategory(id, bottomCategoryRequestDto);
+        ApiResponseDto result = bottomCategoryService.updateBottomCategory(id, bottomCategoryRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(bottomCategory);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     //삭제
     @DeleteMapping("/admin/categories/bottom/{id}")
     public ResponseEntity<ApiResponseDto> deleteBottomCategory(@PathVariable Long id) {
 
-        ApiResponseDto bottomCategory = bottomCategoryService.deleteBottomCategory(id);
+        ApiResponseDto result = bottomCategoryService.deleteBottomCategory(id);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(bottomCategory);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
     }
 }

@@ -11,7 +11,7 @@ public interface TopCategoryService {
 
     TopCategoryListResponseDto getTopCategory();
 
-    TopCategoryResponseDto updateTopCategory(Long id, TopCategoryRequestDto topCategoryRequestDto);
+    ApiResponseDto updateTopCategory(Long id, TopCategoryRequestDto topCategoryRequestDto);
 
     ApiResponseDto deleteTopCategory(Long id);
 }

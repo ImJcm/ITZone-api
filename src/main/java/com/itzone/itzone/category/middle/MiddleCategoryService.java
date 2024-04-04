@@ -11,7 +11,7 @@ public interface MiddleCategoryService {
 
     MiddleCategoryListResponseDto getMiddleCategory();
 
-    MiddleCategoryResponseDto updateMiddleCategory(Long id, MiddleCategoryRequestDto middleCategoryRequestDto);
+    ApiResponseDto updateMiddleCategory(Long id, MiddleCategoryRequestDto middleCategoryRequestDto);
 
     ApiResponseDto deleteMiddleCategory(Long id);
 }

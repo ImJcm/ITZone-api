@@ -10,6 +10,7 @@ public enum ErrorCode {
     BOARD_TITLE_BLANK("error.board.title.blank"),
     BOARD_CONTENT_BLANK("error.board.content.blank"),
     BOARD_CATEGORY_UNSELECT("error.board.category.unselect"),
+    CATEGORY_NOT_EXIST("error.category.not.exist"),
     CREATE_ERROR("error.create"),
     UPDATE_ERROR("error.update");
 

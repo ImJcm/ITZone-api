@@ -1,5 +1,6 @@
 package com.itzone.itzone.category.middle;
 
+import com.itzone.itzone.category.top.BoardTopCategory;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +16,5 @@ public class MiddleCategoryRequestDto {
     private String categoryClassification;
 
     @NotBlank(message = "상위 카테고리명을 입력하세요")
-    private String categoryMiddle;
+    private BoardTopCategory boardTopCategory;
 }

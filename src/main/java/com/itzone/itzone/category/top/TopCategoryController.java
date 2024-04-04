@@ -35,11 +35,11 @@ public class TopCategoryController {
 
     //수정
     @PutMapping("/admin/categories/top/{id}")
-    public ResponseEntity<TopCategoryResponseDto> updateMiddleCategory(@PathVariable Long id, @RequestBody TopCategoryRequestDto topCategoryRequestDto) {
+    public ResponseEntity<ApiResponseDto> updateMiddleCategory(@PathVariable Long id, @RequestBody TopCategoryRequestDto topCategoryRequestDto) {
 
-        TopCategoryResponseDto topCategory = topCategoryService.updateTopCategory(id, topCategoryRequestDto);
+        ApiResponseDto result = topCategoryService.updateTopCategory(id, topCategoryRequestDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(topCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     //삭제
