@@ -7,8 +7,10 @@ import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.category.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
 import com.itzone.itzone.common.Message;
+import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.oauth.OAuthProvider;
 import com.itzone.itzone.user.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -125,8 +128,8 @@ class BoardControllerTest {
     }
 
     @Test
-    @DisplayName("Board 생성 실패 - RequestDto @Valid 예외")
-    void createBoard_RequestDto_Exception() throws Exception {
+    @DisplayName("Board 생성 실패 - RequestDto title blank @Valid 예외")
+    void createBoard_RequestDto_title_blank_Exception() throws Exception {
         //given
         BoardRequestDto req_title_blank = new BoardRequestDto(
                 "",
@@ -135,6 +138,33 @@ class BoardControllerTest {
                 files
         );
 
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        multipart("/boards")
+                                .file("S3files", files.get(0).getBytes())
+                                .param("title",req_title_blank.getTitle())
+                                .param("content", req_title_blank.getContent())
+                                .param("category",req_title_blank.getCategory())
+                                .with(requestBoard -> {
+                                    requestBoard.setMethod("POST");
+                                    return requestBoard;
+                                })
+                                .contentType(MediaType.MULTIPART_FORM_DATA)
+                );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException().getClass().isAssignableFrom(MethodArgumentNotValidException.class)))
+                .andExpect(jsonPath("$.code").value(ErrorCode.INVALID_INPUT_VALUE.getCode()))
+                .andExpect(jsonPath("$.message").value("[title : 제목을 입력하세요.]"));
+    }
+
+    @Test
+    @DisplayName("Board 생성 실패 - RequestDto content blank @Valid 예외")
+    void createBoard_RequestDto_content_blank_Exception() throws Exception {
+        //given
         BoardRequestDto req_content_blank = new BoardRequestDto(
                 board.getTitle(),
                 "",
@@ -142,13 +172,60 @@ class BoardControllerTest {
                 files
         );
 
-        BoardRequestDto req_category_blank = new BoardRequestDto(
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        multipart("/boards")
+                                .file("S3files", files.get(0).getBytes())
+                                .param("title",req_content_blank.getTitle())
+                                .param("content", req_content_blank.getContent())
+                                .param("category",req_content_blank.getCategory())
+                                .with(requestBoard -> {
+                                    requestBoard.setMethod("POST");
+                                    return requestBoard;
+                                })
+                                .contentType(MediaType.MULTIPART_FORM_DATA)
+                );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException().getClass().isAssignableFrom(MethodArgumentNotValidException.class)))
+                .andExpect(jsonPath("$.code").value(ErrorCode.INVALID_INPUT_VALUE.getCode()))
+                .andExpect(jsonPath("$.message").value("[content : 내용을 입력하세요.]"));
+    }
+
+    @Test
+    @DisplayName("Board 생성 실패 - RequestDto category unselect @Valid 예외")
+    void createBoard_RequestDto_category_unselect_Exception() throws Exception {
+        //given
+        BoardRequestDto req_category_unselect = new BoardRequestDto(
                 board.getTitle(),
                 board.getContent(),
                 "",
                 files
         );
 
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        multipart("/boards")
+                                .file("S3files", files.get(0).getBytes())
+                                .param("title",req_category_unselect.getTitle())
+                                .param("content", req_category_unselect.getContent())
+                                .param("category",req_category_unselect.getCategory())
+                                .with(requestBoard -> {
+                                    requestBoard.setMethod("POST");
+                                    return requestBoard;
+                                })
+                                .contentType(MediaType.MULTIPART_FORM_DATA)
+                );
 
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException().getClass().isAssignableFrom(MethodArgumentNotValidException.class)))
+                .andExpect(jsonPath("$.code").value(ErrorCode.INVALID_INPUT_VALUE.getCode()))
+                .andExpect(jsonPath("$.message").value("[category : 카테고리를 선택하세요.]"));
     }
 }
