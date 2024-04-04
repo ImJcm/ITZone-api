@@ -1,7 +1,7 @@
 package com.itzone.itzone.board;
 
 import com.itzone.itzone.awsS3.S3File;
-import com.itzone.itzone.category.BoardBottomCategory;
+import com.itzone.itzone.category.bottom.BoardBottomCategory;
 import com.itzone.itzone.comment.Comment;
 import com.itzone.itzone.common.TimeStamped;
 import com.itzone.itzone.user.User;
