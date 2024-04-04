@@ -6,11 +6,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class ITZoneException extends RuntimeException {
     private ErrorCode errorCode;
-    private HttpStatus httpStatus;
+    private String message;
 
-    public ITZoneException(ErrorCode errorCode, HttpStatus httpStatus) {
-        super(errorCode.getMessage());
+    public ITZoneException(ErrorCode errorCode, String message) {
+        super(message);
+        this.message = message;
         this.errorCode = errorCode;
-        this.httpStatus = httpStatus;
     }
 }
