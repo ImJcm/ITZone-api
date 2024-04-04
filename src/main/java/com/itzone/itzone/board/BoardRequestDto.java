@@ -10,13 +10,13 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class BoardRequestDto {
-    @NotBlank(message = "게시글 제목을 입력해주세요.")
+    @NotBlank(message = "제목을 입력하세요.")
     private String title;
 
-    @NotBlank(message = "게시글 내용을 입력해주세요.")
+    @NotBlank(message = "내용을 입력하세요.")
     private String content;
 
-    @NotBlank(message = "카테고리를 지정해주세요.")
+    @NotBlank(message = "카테고리를 선택하세요.")
     private String category;
 
     private List<MultipartFile> S3files;

@@ -1,6 +1,7 @@
 package com.itzone.itzone.board;
 
 import com.itzone.itzone.common.ApiResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class BoardController {
      * 게시글 생성
      */
     @PostMapping
-    public ResponseEntity<ApiResponseDto> createBoard(@ModelAttribute BoardRequestDto requestDto) {
+    public ResponseEntity<ApiResponseDto> createBoard(@ModelAttribute @Valid BoardRequestDto requestDto) {
         ApiResponseDto result = boardService.createBoard(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -50,7 +51,7 @@ public class BoardController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponseDto> updateBoard(
             @PathVariable long id,
-            @ModelAttribute BoardRequestDto requestDto) {
+            @ModelAttribute @Valid BoardRequestDto requestDto) {
         ApiResponseDto result = boardService.updateBoard(id, requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
