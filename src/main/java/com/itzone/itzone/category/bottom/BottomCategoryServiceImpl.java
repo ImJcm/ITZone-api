@@ -3,7 +3,6 @@ package com.itzone.itzone.category.bottom;
 
 import com.itzone.itzone.category.middle.BoardMiddleCategory;
 import com.itzone.itzone.common.ApiResponseDto;
-import com.itzone.itzone.common.Category;
 import com.itzone.itzone.common.Message;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;

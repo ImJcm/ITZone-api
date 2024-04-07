@@ -17,8 +17,7 @@ public interface BoardService {
      *
      * @return
      */
-    Page<BoardResponseDto> readBoards(int page, int size);
-
+    BoardPageResponseDto readBoards(int page, int size);
 
     /**
      * 게시글 단일 조회

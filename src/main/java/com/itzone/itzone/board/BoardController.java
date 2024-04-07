@@ -29,10 +29,10 @@ public class BoardController {
      * 게시글 전체 조회 (페이징 처리)
      */
     @GetMapping
-    public ResponseEntity<Page<BoardResponseDto>> readBoards(
+    public ResponseEntity<BoardPageResponseDto> readBoards(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        Page<BoardResponseDto> result = boardService.readBoards(page - 1, size);
+        BoardPageResponseDto result = boardService.readBoards(page - 1, size);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
