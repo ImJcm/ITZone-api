@@ -32,7 +32,7 @@ public class BoardController {
     public ResponseEntity<Page<BoardResponseDto>> readBoards(
             @RequestParam("page") int page,
             @RequestParam("size") int size) {
-        Page<BoardResponseDto> result = boardService.readBoards(page, size);
+        Page<BoardResponseDto> result = boardService.readBoards(page - 1, size);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
