@@ -74,5 +74,12 @@ public class BottomCategoryServiceImpl implements BottomCategoryService{
         );
         return boardBottomCategory;
     }
+
+    public BoardBottomCategory findByCategoryName(String categoryName) {
+        BoardBottomCategory boardBottomCategory = boardBottomCategoryRepository.findByCategoryName(categoryName).orElseThrow(
+                () -> new ITZoneException(ErrorCode.CATEGORY_NOT_EXIST, Message.CATEGORY_NOT_EXIST.getMessage())
+        );
+        return boardBottomCategory;
+    }
 }
 
