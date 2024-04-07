@@ -1,10 +1,10 @@
 package com.itzone.itzone.board;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 public class BoardResponseDto {
     private long id;
     private String title;
@@ -13,12 +13,14 @@ public class BoardResponseDto {
     private String modifiedAt;
     private String category;
 
-    public BoardResponseDto(Board board) {
-        this.id = board.getId();
-        this.title = board.getTitle();
-        this.content = board.getContent();
-        this.writer = board.getUser().getNickname();
-        this.modifiedAt = board.getModifiedAtFormatted();
-        this.category = board.getBottomCategory().getCategoryName();
+    public static BoardResponseDto of(Board board) {
+        return BoardResponseDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getUser().getNickname())
+                .modifiedAt(board.getModifiedAtFormatted())
+                .category(board.getBottomCategory().getCategoryName())
+                .build();
     }
 }

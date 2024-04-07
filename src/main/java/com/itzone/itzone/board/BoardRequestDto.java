@@ -2,13 +2,14 @@ package com.itzone.itzone.board;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class BoardRequestDto {
     @NotBlank(message = "제목을 입력하세요.")
     private String title;

@@ -4,11 +4,13 @@ import com.itzone.itzone.awsS3.S3File;
 //import com.itzone.itzone.category.BoardBottomCategory;
 import com.itzone.itzone.common.ApiResponseDto;
 import com.itzone.itzone.common.Message;
+import com.itzone.itzone.common.PageInfo;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
 import com.itzone.itzone.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -53,12 +55,16 @@ public class BoardServiceImpl implements BoardService {
      */
     @Transactional
     @Override
-    public Page<BoardResponseDto> readBoards(int page, int size) {
+    public BoardPageResponseDto readBoards(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<Board> boardList = boardRepository.findAll(pageable);
+        Page<Board> boardPage = boardRepository.findAll(pageable);
+        PageInfo pageInfo = PageInfo.of(page, size, (int) boardPage.getTotalElements(), boardPage.getTotalPages());
 
-        return boardList.map(BoardResponseDto::new);
+        List<Board> boards = boardPage.getContent();
+        List<BoardResponseDto> boardResponseDtos = boards.stream().map(BoardResponseDto::of).toList();
+
+        return BoardPageResponseDto.of(boardResponseDtos, pageInfo);
     }
 
     /**
@@ -71,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponseDto readBoard(Long id) {
         Board board = findBoardById(id);
 
-        return new BoardResponseDto(board);
+        return BoardResponseDto.of(board);
     }
 
     /**
@@ -111,7 +117,7 @@ public class BoardServiceImpl implements BoardService {
 
         boardRepository.delete(board);
 
-        return new ApiResponseDto(Message.BOARD_DELETE.getMessage(), HttpStatus.OK.value());
+        return ApiResponseDto.of(Message.BOARD_DELETE.getMessage(), HttpStatus.OK.value());
 
     }
 
