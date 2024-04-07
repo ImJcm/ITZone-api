@@ -1,10 +1,11 @@
 package com.itzone.itzone.board;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDto {
     private long id;
     private String title;

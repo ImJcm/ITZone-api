@@ -2,15 +2,15 @@ package com.itzone.itzone.board;
 
 import com.itzone.itzone.awsS3.S3File;
 //import com.itzone.itzone.category.BoardBottomCategory;
+import com.itzone.itzone.category.bottom.BoardBottomCategory;
+import com.itzone.itzone.category.bottom.BottomCategoryServiceImpl;
 import com.itzone.itzone.common.ApiResponseDto;
 import com.itzone.itzone.common.Message;
 import com.itzone.itzone.common.PageInfo;
 import com.itzone.itzone.exception.ErrorCode;
 import com.itzone.itzone.exception.ITZoneException;
-import com.itzone.itzone.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
+    private final BottomCategoryServiceImpl bottomCategoryService;
 
     /**
      * 게시글 생성
@@ -36,11 +37,13 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public ApiResponseDto createBoard(BoardRequestDto requestDto) {
+        BoardBottomCategory bottomCategory = bottomCategoryService.findByCategoryName(requestDto.getCategory());
+
         Board board = Board.builder()
                         //.user()
                         .title(requestDto.getTitle())
                         .content(requestDto.getContent())
-                        //.bbc(requestDto.getCategory())
+                        .bbc(bottomCategory)
                         .build();
 
         boardRepository.save(board);
