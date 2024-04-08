@@ -1,10 +1,11 @@
 package com.itzone.itzone.common;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PageInfo {
     int page;
     int size;
